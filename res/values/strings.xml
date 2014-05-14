@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- GENERIC -->
+
     <string name="app_name">GoogleGlassVoiceCommandsSample</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- STARTUP -->
+
+    <string name="startup_voice_command">Voice commands sample</string>
+
+    <!-- MENU -->
+
+    <string name="menu_close">Close</string>
+    <string name="menu_exit">Exit</string>
 
 </resources>

@@ -8,19 +8,33 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.glass.permission.DEVELOPMENT" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.spot.glass.voicecommands.MainActivity"
+            android:name="com.spot.glass.voicecommands.activities.MenuActivity"
+            android:enabled="true"
+            android:label="@string/app_name" >
+        </activity>
+
+        <service
+            android:name="com.spot.glass.voicecommands.controller.LiveCardService"
+            android:enabled="true"
+            android:exported="true"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
             </intent-filter>
-        </activity>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/voice_trigger_start" />
+        </service>
     </application>
 
 </manifest>
