@@ -8,8 +8,6 @@ import android.view.View;
 
 import com.google.android.glass.timeline.DirectRenderingCallback;
 
-;
-
 public class SampleRenderingCallback implements DirectRenderingCallback {
 	private static final String TAG = "GlassUnityLiveCardRenderer";
 
@@ -22,14 +20,16 @@ public class SampleRenderingCallback implements DirectRenderingCallback {
 	public SampleRenderingCallback(Context context) {
 		mMainView = new SampleMainView(context);
 
-		// Subscribing to view update
 		mMainView.setListener(new SampleMainView.ChangeListener() {
 
 			@Override
 			public void onChange() {
+				Log.w("GlassVoiceSample", "Drawing the LiveCard content.");
 				draw(mMainView);
 			}
 		});
+
+		Log.w("GlassVoiceSample", "LiveCard callback initialized.");
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class SampleRenderingCallback implements DirectRenderingCallback {
 		// Update your views accordingly.
 		// This is called immediately after any structural changes (format or
 		// size) have been made to the surface.
+
+		Log.w("GlassVoiceSample", "LiveCard callback is handling a change on the surface.");
 
 		int measuredWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
 		int measuredHeight = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
@@ -47,8 +49,13 @@ public class SampleRenderingCallback implements DirectRenderingCallback {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
+		Log.w("GlassVoiceSample", "LiveCard callback notifies that the Surface has been created.");
+
 		mHolder = holder;
 		mMainView.start();
+		mMainView.setForceStart(true);
+
+		Log.w("GlassVoiceSample", "The SampleMainView started.");
 	}
 
 	@Override
@@ -64,8 +71,10 @@ public class SampleRenderingCallback implements DirectRenderingCallback {
 	public void renderingPaused(SurfaceHolder holder, boolean paused) {
 		if (paused) {
 			mMainView.stop();
+			Log.w("GlassVoiceSample", "LiveCard callback stops rendering.");
 		} else {
 			mMainView.start();
+			Log.w("GlassVoiceSample", "LiveCard callback starts rendering.");
 		}
 	}
 
@@ -82,6 +91,7 @@ public class SampleRenderingCallback implements DirectRenderingCallback {
 
 		if (canvas != null) {
 			view.draw(canvas);
+			Log.w("GlassVoiceSample", "Drawing!!!.");
 			mHolder.unlockCanvasAndPost(canvas);
 		}
 	}

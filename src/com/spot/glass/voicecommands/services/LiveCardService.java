@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 public class LiveCardService extends Service {
 
@@ -26,6 +27,8 @@ public class LiveCardService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		if (mLiveCard == null) {
+			Log.w("GlassVoiceSample", "Created LiveCard with ID: " + LIVE_CARD_ID);
+
 			mLiveCard = new LiveCard(this, LIVE_CARD_ID);
 
 			mCallback = new SampleRenderingCallback(this);
@@ -36,6 +39,8 @@ public class LiveCardService extends Service {
 
 			mLiveCard.attach(this);
 			mLiveCard.publish(PublishMode.REVEAL);
+
+			Log.w("GlassVoiceSample", "Published the brand new LiveCard.");
 		} else {
 			mLiveCard.navigate();
 		}

@@ -16,4 +16,8 @@
     <string name="menu_close">Close</string>
     <string name="menu_exit">Exit</string>
 
+    <!-- MAIN VIEW -->
+    
+    <string name="instructions">Tap for opening the menu and then talk: glasses will recognize only the works related to the possible menu voices.</string>
+    
 </resources>

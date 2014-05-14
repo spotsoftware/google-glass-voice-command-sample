@@ -18,6 +18,7 @@ import com.spot.glass.voicecommands.R;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
@@ -28,8 +29,6 @@ import android.widget.FrameLayout;
  */
 public class SampleMainView extends FrameLayout {
 
-	private static final int DELAY_MILLIS = 1000;
-
 	/**
 	 * Interface to listen for changes on the view layout.
 	 */
@@ -37,9 +36,11 @@ public class SampleMainView extends FrameLayout {
 		public void onChange();
 	}
 
+	private static final int DELAY_MILLIS = 1000;
+
 	private boolean mStarted;
-	private boolean mForceStart;
 	private boolean mVisible;
+	private boolean mForceStart;
 	private boolean mRunning;
 
 	private ChangeListener mChangeListener;
@@ -55,6 +56,7 @@ public class SampleMainView extends FrameLayout {
 	public SampleMainView(Context context, AttributeSet attrs, int style) {
 		super(context, attrs, style);
 		LayoutInflater.from(context).inflate(R.layout.main_layout, this);
+		Log.w("GlassVoiceSample", "SampleMainView has been initialized.");
 	}
 
 	/**
@@ -62,12 +64,23 @@ public class SampleMainView extends FrameLayout {
 	 */
 	public void setListener(ChangeListener listener) {
 		mChangeListener = listener;
+		Log.w("GlassVoiceSample", "SampleMainView's listener has been set.");
+	}
+
+	/**
+	 * Set whether or not to force the start of the chronometer when a window
+	 * has not been attached to the view.
+	 */
+	public void setForceStart(boolean forceStart) {
+		mForceStart = forceStart;
+		updateRunning();
 	}
 
 	/**
 	 * Start the chronometer.
 	 */
 	public void start() {
+		Log.w("GlassVoiceSample", "SampleMainView started!");
 		mStarted = true;
 		updateRunning();
 	}
@@ -76,6 +89,7 @@ public class SampleMainView extends FrameLayout {
 	 * Stop the chronometer.
 	 */
 	public void stop() {
+		Log.w("GlassVoiceSample", "SampleMainView stopped!");
 		mStarted = false;
 		updateRunning();
 	}
@@ -83,6 +97,7 @@ public class SampleMainView extends FrameLayout {
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
+		Log.w("GlassVoiceSample", "SampleMainView has been detached from window.");
 		mVisible = false;
 		updateRunning();
 	}
@@ -90,6 +105,7 @@ public class SampleMainView extends FrameLayout {
 	@Override
 	protected void onWindowVisibilityChanged(int visibility) {
 		super.onWindowVisibilityChanged(visibility);
+		Log.w("GlassVoiceSample", "SampleMainView visibility has changed.");
 		mVisible = (visibility == VISIBLE);
 		updateRunning();
 	}
@@ -100,6 +116,7 @@ public class SampleMainView extends FrameLayout {
 		@Override
 		public void run() {
 			if (mRunning) {
+				Log.w("GlassVoiceSample", "The Runnable is updating text.");
 				updateText();
 				mHandler.postDelayed(mUpdateTextRunnable, DELAY_MILLIS);
 			}
@@ -110,11 +127,20 @@ public class SampleMainView extends FrameLayout {
 	 * Update the running state.
 	 */
 	private void updateRunning() {
+		if (mVisible) {
+			Log.e("GlassVoiceSample", "Variable mVisible is TRUE!");
+		}
+		if (mStarted) {
+			Log.e("GlassVoiceSample", "Variable mStarted is TRUE!");
+		}
+
 		boolean running = (mVisible || mForceStart) && mStarted;
 		if (running != mRunning) {
 			if (running) {
+				Log.e("GlassVoiceSample", "SampleMainView - Post to the handler");
 				mHandler.post(mUpdateTextRunnable);
 			} else {
+				Log.e("GlassVoiceSample", "SampleMainView - removeCallbacks through the handler");
 				mHandler.removeCallbacks(mUpdateTextRunnable);
 			}
 			mRunning = running;
@@ -127,6 +153,7 @@ public class SampleMainView extends FrameLayout {
 	private void updateText() {
 
 		// do stuff
+		Log.w("GlassVoiceSample", "Updating text content.");
 
 		if (this.mChangeListener != null) {
 			this.mChangeListener.onChange();
