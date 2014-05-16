@@ -21,3 +21,6 @@ To convert the pulled .apk into a .jar file you have to download the <a href="ht
 
 <h3>Notes</h3>
 Unfortunatelly the voice recognition isn't working after XE17 update. An issue has been opened <a href="https://code.google.com/p/google-glass-api/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Priority%20Owner%20Component%20Summary&groupby=&sort=&id=511">here</a> and we are waiting for it to be closed.
+
+
+[Google Glass at SPOT Software](http://www.spot.it/news/google-glass)
